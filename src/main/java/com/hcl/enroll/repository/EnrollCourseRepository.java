@@ -10,7 +10,7 @@ import com.hcl.enroll.entity.EnrollCourse;
 
 @Repository
 public interface EnrollCourseRepository extends JpaRepository<EnrollCourse, Integer> {
-	
+
 	Optional<List<EnrollCourse>> findByUserId(Integer userid);
 
 }
