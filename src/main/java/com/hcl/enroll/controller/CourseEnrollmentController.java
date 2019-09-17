@@ -24,11 +24,12 @@ import com.hcl.enroll.service.EnrolledCoursesService;
 /**
  * 
  * @author shiva
+ * @author sairam
  * @version 1.0
  *
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class CourseEnrollmentController {
 
 	private static final Logger lOGGER = LoggerFactory.getLogger(CourseEnrollmentController.class);
@@ -49,18 +50,25 @@ public class CourseEnrollmentController {
 	 * 
 	 * 
 	 */
-	@PostMapping("/elearning/enroll")
+	@PostMapping("/elearning/enrollments")
 	public ResponseEntity<ResponseDto> courseEnrollment(@RequestBody CourseEnrollmentDTO courseEnrollmentDTO) {
 		lOGGER.info(
 				"Inside CourseEnrollmentController class courseEnrollment(CourseEnrollmentDTO courseEnrollmentDTO)");
-		lOGGER.debug("UserId:{userId}", courseEnrollmentDTO.getUserId());
+		lOGGER.debug("UserId:{}", courseEnrollmentDTO.getUserId());
 
 		return new ResponseEntity<>(courseEnrollmentService.courseEnrollment(courseEnrollmentDTO), HttpStatus.CREATED);
 
 	}
-
-	@GetMapping("/{userId}/enroll")
+/**
+ * 
+ * @Param  userId not null 
+@return ResponseEntity<List<EnrolledCoursesDto>> list of enrolled courses along with status code
+@Throws  EnrollCoursesException enrolled courses entry
+ */
+	@GetMapping("/{userId}/enrollments")
 	public ResponseEntity<List<EnrolledCoursesDto>> enrolledCourses(@PathVariable("userId") int userId) {
+		
+		lOGGER.info("enterd enrolledCourses with userId:{}",userId);
 		return ResponseEntity.status(HttpStatus.OK).body(enrolledCoursesService.enrolledCourses(userId));
 	}
 
